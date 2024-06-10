@@ -1,9 +1,10 @@
 <script setup>
 
+import FishForm from "@/FishForm.vue";
 </script>
 <template>
   <div class="view-port center aquarium-image">
-
+    <FishForm/>
   </div>
 </template>
 
