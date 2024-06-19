@@ -1,19 +1,18 @@
 <script setup>
 import {ref} from "vue";
 const fishSelected = ref('');
-
-const types = ref(
-    [
-      {value: 'gold', url: '/goldfish.png'},
-      {value: 'golden', url: '/golden-purple-fish.png'},
-      {value: 'guppie', url: '/guppie.png'},
-      {value: 'tropical', url: '/tropical-fish.png'},
-      {value: 'tuna', url: '/tuna.png'},
-    ]);
+const props = defineProps({
+  types: { type: Array, default: ()=> []},
+  fishName: {type:String, default: ''}
+})
+const emit = defineEmits({
+  'updateFishType': null
+})
+const _fishName = ref(...props.fishName)
 
 const handleSelection = (image) => {
-  fishSelected.value = image.value;
-  console.log("selected", fishSelected.value)
+  fishSelected.value = image;
+  emit('updateFishType', fishSelected.value);
 }
 
 </script>
@@ -35,11 +34,13 @@ const handleSelection = (image) => {
         Name
       </label>
       <input
+          v-model="_fishName"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="username" type="text" placeholder="Mr.Buttons">
     </div>
     <div>
       <button
+          @click="$emit('updateFishName', _fishName)"
           class="bg-red-700 hover:bg-red-800 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button">
         Add Fish
